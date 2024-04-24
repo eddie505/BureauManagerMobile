@@ -3,17 +3,22 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const ProfileScreen = () => {
   return (
-    <View>
-      <Text
-        style={{
-          fontSize: 30,
-          textAlign: "center",
-          marginTop: 20,
-        }}
-      >
-        Información del perfil
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Esta es la profile</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#fefae0",
+  },
+  title: {
+    fontSize: 20,
+    textAlign: "center",
+  },
+});
 export default ProfileScreen;

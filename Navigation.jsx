@@ -2,17 +2,31 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { useFonts } from "expo-font";
+import { View, Text, StyleSheet, TouchableOpacity, color } from "react-native";
 
 //Screens
 import HomeScreen from "./screens/HomeScreen";
-import ProfileScreen from "./screens/ProfileScreen";
+import PaymentScreen from "./screens/PaymentScreen";
 import LoginScreen from "./screens/LoginScreen";
+import InfoScreen from "./screens/InfoScreen";
+import SupportScreen from "./screens/SupportScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function TabNavigator() {
+  const [fontsLoaded] = useFonts({
+    FredokaRegular: require("./assets/fonts/Fredoka-Regular.ttf"),
+    FredokaBold: require("./assets/fonts/Fredoka-Bold.ttf"),
+    FredokaMedium: require("./assets/fonts/Fredoka-Medium.ttf"),
+    FredokaLight: require("./assets/fonts/Fredoka-Light.ttf"),
+    FredokaSemiBold: require("./assets/fonts/Fredoka-SemiBold.ttf"),
+  });
+
+  if (!fontsLoaded) return null;
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -25,24 +39,54 @@ function TabNavigator() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color, fontFamily: "FredokaBold" }}>Home</Text>
+          ),
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" size={size} color={color} />
+            <MaterialCommunityIcons name="home" size={size} color={color} />
           ),
           headerShown: false,
         }}
       />
       <Tab.Screen
-        name="Perfil"
-        component={ProfileScreen}
+        name="Pagos"
+        component={PaymentScreen}
         options={{
-          tabBarLabel: "Perfil",
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color, fontFamily: "FredokaBold" }}>Pagos</Text>
+          ),
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cash" size={size} color={color} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Info"
+        component={InfoScreen}
+        options={{
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color, fontFamily: "FredokaBold" }}>Perfil</Text>
+          ),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="account-question"
               size={size}
               color={color}
             />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Help"
+        component={SupportScreen}
+        options={{
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color, fontFamily: "FredokaBold" }}>Ayuda</Text>
+          ),
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="help" size={size} color={color} />
           ),
           headerShown: false,
         }}

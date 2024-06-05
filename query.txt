@@ -1,0 +1,68 @@
+app.get(`/api/getInquilinosByCode`, (req, res) => {
+  const { codigo_inquilino } = req.query;
+  const query = `
+    SELECT 
+      i.id_inquilino, 
+      i.id_departamento, 
+      i.nombre_inquilino, 
+      i.apellino_paterno_inquilino, 
+      i.apellino_materno_inquilino, 
+      i.correo_inquilino, 
+      i.codigo_inquilino, 
+      p.id_info_pagos,
+      p.id_condominio,
+      p.id_edificio,
+      p.total_pagado,
+      p.adeudo,
+      p.fecha_pago,
+      ac.id_edificio,
+      ac.cuota_base,
+      ac.cuota_extra
+    FROM inquilino i
+    LEFT JOIN infopagos p ON i.id_inquilino = p.id_inquilino
+    LEFT JOIN admin_cuotas ac ON p.id_condominio = ac.id_condominio
+    WHERE i.codigo_inquilino = ?
+  `;
+  connection.query(query, [codigo_inquilino], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).send("Error al obtener al inquilino por su codigo");
+    } else {
+      const inquilino = results[0];
+      if (!inquilino) {
+        res.status(404).send("Ningun inquilino esta ligado a ese codigo");
+      } else {
+        if (inquilino.correo_inquilino === null) {
+          inquilino.correo_inquilino =
+            "No se proporciono un correo electronico";
+        }
+        if (inquilino.total_pagado === null) {
+          inquilino.total_pagado = "No se ha realizado ningun pago";
+        }
+        if (inquilino.adeudo === null) {
+          inquilino.adeudo = "No se tienen adeudos";
+        }
+        if (inquilino.fecha_pago === null) {
+          inquilino.fecha_pago = "No se ha realizado ningun pago aun";
+        }
+        if (inquilino.cuota_base === null) {
+          inquilino.cuota_base = "No hay cuotas ligadas al inquilino";
+        }
+        if (inquilino.cuota_extra === null) {
+          inquilino.cuota_extra = "No hay cuotas extra ligadas al inquilino";
+        }
+        if (inquilino.id_info_pagos === null) {
+          inquilino.id_info_pagos = "No hay identidicador de pagos";
+        }
+        if (inquilino.id_condominio === null) {
+          inquilino.id_condominio = "No hay identificador de condominio";
+        }
+        if (inquilino.id_edificio === null) {
+          inquilino.id_edificio = "No hay identificador de edificio";
+        }
+        res.json(inquilino);
+        console.log(inquilino);
+      }
+    }
+  });
+});

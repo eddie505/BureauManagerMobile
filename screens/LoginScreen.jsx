@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   Text,
-  Style,
   TextInput,
-  Button,
 } from "react-native";
 import LottieView from "lottie-react-native";
 import { useFonts } from "expo-font";
+import axios from "axios";
+import { REACT_APP_SERVER_URL } from "../backend/Util";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -25,10 +26,36 @@ const LoginScreen = ({ navigation }) => {
 
   if (!fontsLoaded) return null;
 
-  const handleLogin = () => {
-    // Aquí puedes manejar la lógica de autenticación
-    // Si la autenticación es exitosa, navega a la pantalla principal
-    navigation.navigate("MainApp");
+  const handleLogin = async () => {
+    //Verificar la entrada del codigo
+    const isValid = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{1,8}$/.test(
+      password
+    );
+    if (!isValid) {
+      alert(
+        "El código debe contener al menos un número y una letra y tener una longitud máxima de 8 caracteres."
+      );
+      return;
+    }
+    try {
+      //Realizar la peticion al servidor
+      const response = await axios.get(
+        `${REACT_APP_SERVER_URL}/api/getInquilinosByCode`,
+        {
+          params: {
+            codigo_inquilino: password,
+          },
+        }
+      );
+      //Guardar la respuesta del servidor
+      await AsyncStorage.setItem("@inquilino", JSON.stringify(response.data));
+
+      // Aquí puedes manejar la lógica de autenticación
+      // Si la autenticación es exitosa, navega a la pantalla principal
+      navigation.navigate("MainApp");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -43,8 +70,7 @@ const LoginScreen = ({ navigation }) => {
         value={password}
         onChangeText={setPassword}
         secureTextEntry
-        keyboardType="numeric"
-        maxLength={10}
+        maxLength={8}
       />
       <TouchableOpacity style={styles.logbtn} onPress={handleLogin}>
         <Text style={styles.btnText}>Iniciar sesión</Text>

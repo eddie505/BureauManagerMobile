@@ -1,9 +1,8 @@
-import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { View, Text, StyleSheet, TouchableOpacity, color } from "react-native";
+import { Text } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 //Screens
 import HomeScreen from "./screens/HomeScreen";
@@ -13,10 +12,11 @@ import InfoScreen from "./screens/InfoScreen";
 import SupportScreen from "./screens/SupportScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function TabNavigator() {
+  const Tab = createBottomTabNavigator();
+
   const [fontsLoaded] = useFonts({
     FredokaRegular: require("./assets/fonts/Fredoka-Regular.ttf"),
     FredokaBold: require("./assets/fonts/Fredoka-Bold.ttf"),

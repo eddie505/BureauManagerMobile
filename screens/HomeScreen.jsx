@@ -1,5 +1,4 @@
-import React from "react";
-import { View, StyleSheet, TouchableOpacity, Text, Style } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useFonts } from "expo-font";
 
 const HomeScreen = () => {
@@ -17,13 +16,17 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <Text style={styles.title}>¡Bienvenido a Bureau Manager Mobile!</Text>
       <Text style={styles.basicInfo}>
-        {
-          "En esta aplicación podrás ver toda la información relacionada a tus pagos y adeudos, así como información general de tu perfil.\n"
-        }
-
-        {
-          "Recuerda que si tienes alguna duda o problema, puedes dirigirte a la pestaña de ayuda.\n"
-        }
+        En esta aplicación podrás ver toda la información relacionada a tus
+        pagos y adeudos, así como información general de tu perfil.
+      </Text>
+      <Text style={styles.basicInfo}>
+        Recuerda que si tienes alguna duda o problema, puedes dirigirte a la
+        pestaña de ayuda.
+      </Text>
+      <Text style={styles.basicInfo}>
+        Si necesitas asistencia inmediata, no dudes en contactarnos a través de
+        nuestro correo de soporte:{" "}
+        <Text style={styles.email}>atencion@bureaumanager.com</Text>
       </Text>
     </View>
   );
@@ -39,7 +42,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: "FredokaBold",
     alignSelf: "flex-start",
-    textAlign: "ju",
+    textAlign: "justify",
     marginTop: 25,
   },
   basicInfo: {
@@ -48,6 +51,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     textAlign: "left",
     marginTop: 25,
+  },
+  email: {
+    fontSize: 20,
+    fontFamily: "FredokaBold",
+    color: "#007BFF",
   },
 });
 

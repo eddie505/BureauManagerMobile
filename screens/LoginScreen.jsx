@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
     );
     if (!isValid) {
       alert(
-        "El código debe contener al menos un número y una letra y tener una longitud máxima de 8 caracteres."
+        "El código debe contener al menos un número y/o una letra y tener una longitud máxima de 8 caracteres."
       );
       return;
     }
@@ -55,6 +55,7 @@ const LoginScreen = ({ navigation }) => {
       navigation.navigate("MainApp");
     } catch (error) {
       console.error(error);
+      alert("No se encontro a ningun inquilino por ese codigo");
     }
   };
 
@@ -66,7 +67,7 @@ const LoginScreen = ({ navigation }) => {
       </Text>
       <TextInput
         style={styles.input}
-        placeholder="Ej. 123456"
+        placeholder="Ej. Ny90lok6"
         value={password}
         onChangeText={setPassword}
         secureTextEntry

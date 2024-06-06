@@ -32,18 +32,33 @@ const PaymentScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Pagos asociados a tí </Text>
-      <Text style={styles.text}>ID pagos: {paymentInfo.id_info_pagos}</Text>
-      <Text style={styles.text}>Adeudo: {paymentInfo.adeudo}</Text>
-      <Text style={styles.text}>Total Pagado: {paymentInfo.total_pagado}</Text>
-      <Text style={styles.text}>Cuota Base: {paymentInfo.cuota_base}</Text>
-      <Text style={styles.text}>
-        Cuota Extra: ${paymentInfo.cuota_extra} Mxn
-      </Text>
-      <Text style={styles.text}>Fecha de Pago: {paymentInfo.fecha_pago}</Text>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>ID pagos:</Text>
+        <Text style={styles.text}>{paymentInfo.id_info_pagos}</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Adeudo:</Text>
+        <Text style={styles.text}>${paymentInfo.adeudo}Mxn</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Total Pagado:</Text>
+        <Text style={styles.text}>${paymentInfo.total_pagado}Mxn</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Cuota Base:</Text>
+        <Text style={styles.text}>${paymentInfo.cuota_base}Mxn</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Cuota Extra:</Text>
+        <Text style={styles.text}>${paymentInfo.cuota_extra} Mxn</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Fecha de Pago:</Text>
+        <Text style={styles.text}>{paymentInfo.fecha_pago}</Text>
+      </View>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -57,9 +72,22 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 25,
   },
+  boldText: {
+    fontSize: 20,
+    fontFamily: "FredokaBold",
+    fontWeight: "bold",
+    marginTop: 10,
+  },
   text: {
     fontSize: 20,
     fontFamily: "FredokaMedium",
+    marginTop: 10,
+  },
+  box: {
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 5,
+    padding: 10,
     marginTop: 10,
   },
 });

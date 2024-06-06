@@ -33,23 +33,33 @@ const InfoScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tus datos</Text>
-      <Text style={styles.text}>
-        Eres el inquilino No. {userInfo.id_inquilino}
-      </Text>
-      <Text style={styles.text}>
-        Tu condominio es el No. {userInfo.id_condominio}
-      </Text>
-      <Text style={styles.text}>
-        Tu departamento es el No. {userInfo.id_departamento}
-      </Text>
-      <Text style={styles.text}>Tu nombre es: {userInfo.nombre_inquilino}</Text>
-      <Text style={styles.text}>
-        Tus apellidos son: {userInfo.apellino_paterno_inquilino}{" "}
-        {userInfo.apellino_materno_inquilino}
-      </Text>
-      <Text style={styles.text}>
-        Tu correo electrónico es: {userInfo.correo_inquilino}
-      </Text>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Eres el inquilino No.</Text>
+        <Text style={styles.text}>{userInfo.id_inquilino}</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Tu condominio es el No.</Text>
+        <Text style={styles.text}>{userInfo.id_condominio}</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Tu departamento es el No.</Text>
+        <Text style={styles.text}>{userInfo.id_departamento}</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Tu nombre es:</Text>
+        <Text style={styles.text}>{userInfo.nombre_inquilino}</Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Tus apellidos son:</Text>
+        <Text style={styles.text}>
+          {userInfo.apellino_paterno_inquilino}{" "}
+          {userInfo.apellino_materno_inquilino}
+        </Text>
+      </View>
+      <View style={styles.box}>
+        <Text style={styles.boldText}>Tu correo electrónico es:</Text>
+        <Text style={styles.text}>{userInfo.correo_inquilino}</Text>
+      </View>
     </View>
   );
 };
@@ -70,6 +80,18 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontFamily: "FredokaMedium",
+    marginBottom: 10,
+  },
+  boldText: {
+    fontSize: 20,
+    fontFamily: "FredokaMedium",
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  box: {
+    borderWidth: 1,
+    borderColor: "#000",
+    padding: 10,
     marginBottom: 10,
   },
 });

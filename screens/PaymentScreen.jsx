@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useFonts } from "expo-font";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CryptoJS from "react-native-crypto-js";
 
 const PaymentScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -19,8 +20,22 @@ const PaymentScreen = () => {
   useEffect(() => {
     const fetchPaymentInfo = async () => {
       const storedPaymentInfo = await AsyncStorage.getItem("@inquilino");
+
+      // Desencriptar los datos
+      const bytes = CryptoJS.AES.decrypt(
+        storedPaymentInfo,
+        "nF&#C&EHqxC!E4eqzLxA"
+      );
+      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // Mostrar los datos encriptados en la consola
+      console.log("Datos encriptados:", storedPaymentInfo);
+
+      // Mostrar los datos desencriptados en la consola
+      console.log("Datos desencriptados:", decryptedData);
+
       if (setPaymentInfo) {
-        setPaymentInfo(JSON.parse(storedPaymentInfo));
+        setPaymentInfo(decryptedData);
       }
     };
     fetchPaymentInfo();

@@ -7,6 +7,7 @@ import {
   TextInput,
 } from "react-native";
 import LottieView from "lottie-react-native";
+import CryptoJS from "react-native-crypto-js";
 import { useFonts } from "expo-font";
 import axios from "axios";
 import { REACT_APP_SERVER_URL } from "../backend/Util";
@@ -47,8 +48,13 @@ const LoginScreen = ({ navigation }) => {
           },
         }
       );
-      //Guardar la respuesta del servidor
-      await AsyncStorage.setItem("@inquilino", JSON.stringify(response.data));
+      //Encriptar la respuesta de la base de datos
+      const ciphertext = CryptoJS.AES.encrypt(
+        JSON.stringify(response.data),
+        "nF&#C&EHqxC!E4eqzLxA"
+      ).toString();
+      //Guardar la respuesta encriptada del servidor
+      await AsyncStorage.setItem("@inquilino", ciphertext);
 
       // Aquí puedes manejar la lógica de autenticación
       // Si la autenticación es exitosa, navega a la pantalla principal

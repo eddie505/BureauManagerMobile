@@ -2,6 +2,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import CryptoJS from "react-native-crypto-js";
 
 const InfoScreen = () => {
   const [fontsLoaded] = useFonts({
@@ -19,13 +20,26 @@ const InfoScreen = () => {
   useEffect(() => {
     const fetchUserInfo = async () => {
       const storedUserInfo = await AsyncStorage.getItem("@inquilino");
+
+      // Desencriptar los datos
+      const bytes = CryptoJS.AES.decrypt(
+        storedUserInfo,
+        "nF&#C&EHqxC!E4eqzLxA"
+      );
+      const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+
+      // Mostrar los datos encriptados en la consola
+      console.log("Datos encriptados:", storedUserInfo);
+
+      // Mostrar los datos desencriptados en la consola
+      console.log("Datos desencriptados:", decryptedData);
+
       if (setUserInfo) {
-        setUserInfo(JSON.parse(storedUserInfo));
+        setUserInfo(decryptedData);
       }
     };
     fetchUserInfo();
   }, []);
-
   if (!userInfo) {
     return <Text> Cargando información de usuario...</Text>;
   }
